@@ -3,7 +3,10 @@
     v-if="statusMatch === 'default'"
     @onStart="onHandleBeforeMatch($event)"
   />
-  <InteractScreen v-if="statusMatch === 'match'" :cardsContext="cardContext" />
+  <InteractScreen
+    v-if="statusMatch === 'match'"
+    :cardsContext="settings.cardContext"
+  />
   <CopyRight />
 </template>
 

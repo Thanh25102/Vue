@@ -5,14 +5,32 @@
       :class="{ 'is-flipped': isFlipped }"
       @click="onToggle"
     >
-      <div class="card__face card__face--front">Front</div>
-      <div class="card__face card__face--back">Back</div>
+      <div class="card__face card__face--front">
+        <div class="card__content"></div>
+      </div>
+      <div class="card__face card__face--back">
+        <div
+          class="card__content"
+          :style="{
+            backgroundImage: `url(${require('@/assets/' + imgBackFaceUrl)})`
+          }"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
 <script lang="js">
 export default {
   name: 'CardPokemon',
+  props: {
+    card: {
+      type: [String, Number, Array, Object]
+    },
+    imgBackFaceUrl: {
+      type: String,
+      required: true
+    }
+  },
   data: () => {
     return {
       isFlipped: false
@@ -21,6 +39,7 @@ export default {
   methods: {
     onToggle () {
       this.isFlipped = !this.isFlipped
+      if (this.isFlipped) this.$emit('onFlip', this.card)
     }
   }
 }
@@ -58,8 +77,21 @@ export default {
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
 }
 
+.card__face--back .card__content {
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+}
+.card__face--front .card__content {
+  background: url('../assets/images/icon_back.png') no-repeat center center;
+  background-size: 40px 40px;
+  height: 100%;
+  width: 100%;
+}
+
 .card__face--back {
-  background-color: var(--light);
   transform: rotateY(-180deg);
 }
 </style>

@@ -1,6 +1,12 @@
 <template>
   <h1>Interact running ....</h1>
-  <CardPokemon v-for="(card, index) in cardsContext" :key="index" />
+  <CardPokemon
+    v-for="(card, index) in cardsContext"
+    :key="index"
+    :imgBackFaceUrl="`images/${card}.png`"
+    :card="card"
+    @onFlip="checkRule($event)"
+  />
 </template>
 
 <script lang="js">
@@ -15,8 +21,18 @@ export default {
       }
     }
   },
+  data: () => {
+    return {
+      rules: []
+    }
+  },
   components: {
     CardPokemon
+  },
+  methods: {
+    checkRule (card) {
+      console.log(card)
+    }
   }
 }
 </script>
